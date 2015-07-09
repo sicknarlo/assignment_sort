@@ -22,27 +22,67 @@ class Sorter
 
     0.upto(array.length - 2) do |i|
       insert(array, i, array[i + 1])
-    end
+    end   
+
+    array   
 
   end
 
   def bubble_sort(array)
 
-    # [3, 5, 1, 2, 9, 6, 4, 8, 7]
-
-    # 0.upto(array.length - 1) do |i|
-    #   i.upto(array.length-1) do |j|
-    #     array[i], array[j] = array[j], array[i] if array[i] > array[j]
-    #   end
-    #   p array
-    # end
-
-    0.upto(array.length-2) do |i|
+    sorted = false
+    i = 0
+    until sorted
+      sorted = true
       0.upto((array.length-2)-i) do |j|
-        array[j],array[j+1] = array[j+1], array[j] if array[j] > array[j + 1]
+        if array[j] > array[j + 1]
+          array[j],array[j+1] = array[j+1], array[j]
+          sorted = false
+        end
       end
+      i += 1
       p array
     end
+
+    array
+
+  end
+
+  def mergesort(array)
+
+    return array if array.length == 1
+    new_arr = array.each_slice((array.length/2.0).round).to_a
+    p new_arr
+    leftArr = mergesort(new_arr[0])
+    p leftArr
+    rightArr = mergesort(new_arr[1])
+    p rightArr
+    merge(leftArr, rightArr)
+
+  end
+
+  def merge(leftArr, rightArr)
+    
+    new_array = []
+    i = 0
+    j = 0
+    until i == leftArr.length && j == rightArr.length
+      if i == leftArr.length
+        new_array << rightArr[j]
+        j += 1
+      elsif j == rightArr.length
+        new_array << leftArr[i]
+        i += 1
+      elsif leftArr[i] < rightArr[j]
+        new_array << leftArr[i]
+        i += 1
+      elsif leftArr[i] > rightArr[j]
+        new_array << rightArr[j]
+        j += 1
+      end
+    end
+
+    new_array
 
   end
 
